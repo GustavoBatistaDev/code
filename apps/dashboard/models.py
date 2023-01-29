@@ -1,50 +1,39 @@
 from django.db import models
-from account.models import PerfilUsuario
 from django.contrib.auth import get_user_model
+from datetime import datetime
 
 User = get_user_model()
+
 
 class Avaliacao(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+
     choices = (
         ('P', 'Péssimo'),
         ('R', 'Ruim'),
         ('B', 'Bom'),
-        ('E', 'Excelente')
+        ('E', 'Excelente'),
     )
 
     status = models.CharField(
-        choices=choices,
-        blank=False, null=False,
-        max_length=1,
-        default='P'
+        choices=choices, blank=False, null=False, max_length=1, default='P'
     )
 
-    data = models.DateTimeField()
+    data = models.DateTimeField(default=datetime.now)
+
 
 class Anotacao(models.Model):
-    avaliacao = models.ForeignKey(Avaliacao, on_delete=models.DO_NOTHING)
+    avaliacao = models.ForeignKey(Avaliacao, on_delete=models.CASCADE)
     choices = (
         ('P', 'Positivo'),
         ('N', 'Negativo'),
-        
     )
 
     tipo = models.CharField(
-            choices=choices,
-            blank=False, null=False,
-            max_length=1,
-            default='P'
+        choices=choices, blank=False, null=False, max_length=1, default='P'
     )
     anotacao = models.TextField()
-    
-
-class ContatoAjuda(models.Model):
-
-    usuario = models.ForeignKey(PerfilUsuario, on_delete=models.CASCADE, null=True, blank=True)
-    email = models.EmailField(max_length=100)
 
 
 class AlertaDeCrise(models.Model):
@@ -53,18 +42,10 @@ class AlertaDeCrise(models.Model):
         ('P', 'Pânico'),
         ('D', 'Depressão'),
         ('A', 'Ansiedade'),
-)
+    )
     tipo = models.CharField(
-        choices=choices, null=True, blank=True,
-        max_length=1,
-        default='A'
+        choices=choices, null=True, blank=True, max_length=1, default='A'
     )
 
     inicio = models.DateTimeField()
     fim = models.DateField(blank=True, null=True)
-
-
-
-
-
-

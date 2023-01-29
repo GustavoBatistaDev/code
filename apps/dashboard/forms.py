@@ -1,6 +1,6 @@
 from django.forms import ModelForm
-from .models import Avaliacao, ContatoAjuda, Anotacao, AlertaDeCrise
-from django import forms 
+from .models import Avaliacao, Anotacao, AlertaDeCrise
+from django import forms
 
 
 class AvaliacaoForm(ModelForm):
@@ -9,26 +9,19 @@ class AvaliacaoForm(ModelForm):
         exclude = ('user',)
 
         widgets = {
-            'data': forms.DateInput(
-                attrs={'type': 'date'}, format='%Y-%m-%d'
+            'data': forms.DateTimeInput(
+                attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'
             ),
         }
-
-        
-class ContatoAjudaForm(ModelForm):
-    class Meta:
-        model = ContatoAjuda
-        fields = '__all__'
 
 
 class AnotacaoForm(ModelForm):
     class Meta:
         model = Anotacao
-        exclude = ('avaliacao', )
+        exclude = ('avaliacao',)
 
 
 class AlertaDeCriseForm(ModelForm):
     class Meta:
         model = AlertaDeCrise
         fields = '__all__'
-

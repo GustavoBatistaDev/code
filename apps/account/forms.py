@@ -19,6 +19,7 @@ class RegisterForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         fields = ('first_name', 'email')
 
+
 class AuthForm(forms.Form):
     email = forms.EmailField(
         label='Email',
