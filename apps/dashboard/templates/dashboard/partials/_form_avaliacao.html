@@ -1,0 +1,17 @@
+{% include 'global/partials/_form.html' with form=form_avaliacao %} 
+{{ form_anotacao.management_form }}
+{% for form in form_anotacao %}
+    <div class="inlineform">
+        {% include 'global/partials/_form.html' %}
+    </div>
+{% endfor %}
+<br />
+<div id="anotation-content"></div>
+<div class="form-group mt-3 text-center">
+    <button
+        type="submit"
+        class="btn btn-success btn-lg"
+    >
+        Salvar
+    </button>
+</div>

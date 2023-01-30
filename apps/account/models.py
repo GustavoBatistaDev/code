@@ -17,8 +17,16 @@ class User(AbstractUser):
     def __str__(self) -> str:
         return self.email
 
-class PerfilUsuario(models.Model):
-    telefone = models.CharField(max_length=11)
-    nome = models.CharField(max_length=255)
-    sobrenome = models.CharField(max_length=255)
-    endereco = models.CharField(max_length=255)
+
+class ContatoAjuda(models.Model):
+    usuario = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True
+    )
+    nome = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+
+    def __str__(self) -> str:
+        return self.nome
+
+    class Meta:
+        unique_together = [['usuario', 'email']]

@@ -14,13 +14,19 @@
         </li>
         <li>
             <a href="{% url 'dashboard:crise' %}" class="nav-link text-white">
-                <i class="fa-solid fa-gauge-high"></i>
+                <i class="fa-solid fa-circle-exclamation"></i>
                 Crises
             </a>
         </li>
         <li>
-            <a href="{% url 'dashboard:ajuda' %}" class="nav-link text-white">
-                <i class="fa-solid fa-boxes-stacked"></i>
+            <a href="{% url 'dashboard:contato' %}" class="nav-link text-white">
+                <i class="fa-solid fa-address-book"></i>
+                Contatos
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'dashboard:ajuda' %}" class="nav-link text-white bg-danger">
+                <i class="fa-solid fa-bell"></i>
                 Ajuda
             </a>
         </li>

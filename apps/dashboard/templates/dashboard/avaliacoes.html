@@ -1,0 +1,105 @@
+{% extends 'dashboard/base.html' %} {% load static %} {% block head %}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery.formset.js' %}"></script>
+<script src="{% static 'js/avaliacao.js' %}" defer></script>
+{% endblock head %} {% block dashboard_content %}
+<div class="mt-3">
+	{% include 'global/partials/_messages.html' %}
+	<button
+		type="button"
+		class="btn btn-primary"
+		onclick="avaliacao_form('{% url "dashboard:avaliacao"%}')"
+	>
+		Criar avaliação
+	</button>
+
+	<!-- Modal -->
+	<div
+		class="modal fade"
+		id="avaliacao_modal"
+		tabindex="-1"
+		aria-labelledby="avaliacao_modal"
+		aria-hidden="true"
+	>
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">
+						Criar Avaliacao
+					</h1>
+					<button
+						type="button"
+						class="btn-close"
+						data-bs-dismiss="modal"
+						aria-label="Close"
+					></button>
+				</div>
+				<div class="modal-body">
+					<form action="" method="POST" id="avaliacao_form">
+						{% csrf_token %}
+						<div class="content-form"></div>
+					</form>
+				</div>
+				<div
+					class="modal-footer text-center justify-content-center"
+				></div>
+			</div>
+		</div>
+	</div>
+	<div class="avaliacoes">
+		<table class="table table-striped empty-cell">
+			<thead>
+				<tr>
+					<th scope="col">Status</th>
+					<th scope="col">Data</th>
+					<th scope="col" colspan="2" class="text-center">Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for avaliacao in avaliacoes %}
+					<tr>
+						<td>{{ avaliacao.get_status_display }}</td>
+						<td>{{ avaliacao.data }}</td>
+						<td class="text-center">
+							<button 
+								type="button"
+								class="btn btn-warning"
+								onclick="avaliacao_form('{% url "dashboard:editar_avaliacao" avaliacao.id %}')">
+								<i class="fa-solid fa-pen-to-square"></i>
+							</button>
+						</td>
+						<td class="text-center">
+							<a class="btn btn-danger text-black" href="{% url 'dashboard:deletar_avaliacao' avaliacao.id %}">
+								<i class="fa-solid fa-trash"></i>
+							</a>
+						</td>
+					</tr>
+					{% if avaliacao.anotacao_set.all %}
+						<tr>
+							<td class="opacity-0 border-0"></td>
+							<td colspan='2'>
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th scope="col">Tipo</th>
+											<th scope="col">Anotacao</th>
+										</tr>
+									</thead>
+									<tbody>
+									{% for anotation in avaliacao.anotacao_set.all %}
+										<tr>
+											<td>{{ anotation.get_tipo_display }}</td>
+											<td>{{ anotation.anotacao }}</td>
+										</tr>
+									{% endfor %}
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock dashboard_content %}

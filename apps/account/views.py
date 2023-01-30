@@ -12,6 +12,7 @@ from django.forms import ModelForm
 ACCOUNT_REGISTER_TEMPLATE = 'account/register.html'
 ACCOUNT_LOGIN_TEMPLATE = 'account/login.html'
 
+
 @not_login_required()
 def register(request: HttpRequest) -> HttpResponse:
     data = {'title': 'Registro'}
@@ -32,6 +33,7 @@ def register(request: HttpRequest) -> HttpResponse:
             messages.error(request, 'Dados inválidos')
             return render(request, ACCOUNT_REGISTER_TEMPLATE, data)
 
+
 def logout(request: HttpRequest) -> HttpResponse:
     logout_django(request)
     return redirect('account:login')
@@ -48,7 +50,7 @@ def login(request: HttpRequest) -> HttpResponse:
         return render(request, ACCOUNT_LOGIN_TEMPLATE, data)
     elif request.method == 'POST':
         form: ModelForm = AuthForm(request.POST)
-        
+
         if form.is_valid():
             if user := authenticate(**form.cleaned_data):
                 login_django(request, user)
